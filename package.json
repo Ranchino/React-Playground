@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "app": "npm-run-all --parallel build-watch live-server",
     "build-watch": "webpack-cli --watch",
     "live-server": "live-server"
