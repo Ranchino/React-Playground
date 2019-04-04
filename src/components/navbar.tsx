@@ -5,9 +5,10 @@ export default function Header(){
 }
 
 const header: CSSProperties = {
-    fontSize: "1.7em",
+    fontFamily: "Verdana, Geneva, sans-serif",
+    fontSize: "2em",
     margin: 0,
-    padding: 0,
+    padding: "0.5em",
     cursor: "pointer",
     display: "flex",
     alignItems: "center"

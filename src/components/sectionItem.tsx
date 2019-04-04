@@ -10,5 +10,7 @@ export default function SectionItem(props: Props){
 }
 
 const imageStyle: CSSProperties = {
-width: "100%"
+width: "100%",
+height: "33%",
+objectFit: "cover"
 }
