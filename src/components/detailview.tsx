@@ -1,33 +1,32 @@
 import React, { CSSProperties } from 'react';
-import { centeredContent } from '../css';
 import { View } from './layout';
 
 interface Props {
     view: View
-    onClick: (view: View) => void
 }
-/** React function component */
-export default function SectionItem(props: Props) {
-    const imageSrc = `../assets/${props.view}.jpg`;
 
-    const handleOnclick = function() {
-        props.onClick(props.view)
-    }
+/** React function component */
+export default function DetailView(props:Props) {
+
+    const imageSrc = `../assets/${props.view}.jpg`
 
     return (
-        <div style={{ ...gridItem, ...centeredContent }} onClick={handleOnclick}>
-            <img src={imageSrc} style={fullscreen} />
+        <div style={container}>
+            <img src={imageSrc} style={fullscreen}/>
             <h1 style={{ ...centeredAbsolute, ...appearance}}>{props.view}</h1>
         </div>
     );
 }
 
-
-const gridItem: CSSProperties = {
-    position: 'relative',
+//Ändra till rätt storlek på bilderna i mobilläge
+const container: CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     margin: '0.5em',
-    background: '#808080',
-    height: '100%'
+    justifyContent: 'stretch',
+    alignItems: 'stretch',
+    gridTemplateColumns: '50% 50%'
 }
 
 const fullscreen: CSSProperties = {

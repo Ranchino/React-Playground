@@ -1,20 +1,47 @@
-import React, {CSSProperties} from "react";
-import Header from "./navbar";
-import Content from "./content";
+import React, { CSSProperties } from 'react';
+import Navbar from './navbar';
+import ViewContainer from './viewcontainer';
+import { fullScreen } from '../css';
 
-export default function Layout(){
-    return (
-        <div style = {{...flex}}>
-            <Header/>
-            <Content/>
-        </div>
-    );
+export type View =  "main" | "forest" | "desert" | "sky"
+
+
+interface State {
+    view: View
 }
 
-const flex: CSSProperties = {
-    display: "flex",
-    height: "100%",
-    background: "black",
-    flexDirection: "column",
-    color: "#E1E1E1"
+/** React function component */
+export default class Layout extends React.Component<{}, State> {
+
+    state: State = {
+        view: "main"
+    }
+
+    handleOnHeaderTextClick = () => {
+        this.setState({ view: "main" })
+    }
+
+    handleOnSectionItemOnclick = (view: View) => {
+        this.setState({ view });
+    }
+    
+    render(){
+        //console.log(this.state.view)
+        return (
+            <div style={{ ...columnFlex, ...fullScreen, ...background }}>
+                <Navbar onHeadTextClick={this.handleOnHeaderTextClick}/>
+                <ViewContainer view={this.state.view} onSectionItemClick={this.handleOnSectionItemOnclick} />
+            </div>
+        );
+
+    }
+}
+
+const columnFlex: CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+};
+
+const background: CSSProperties = {
+    background: '#1f1f1f'
 }
