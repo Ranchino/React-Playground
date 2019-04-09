@@ -10,9 +10,9 @@ export default function Navbar(props: Props) {
 
     return (
         <div style={header}>
-        <Link to="/test">
-            <h1 style={headerItem} onClick={props.onHeadTextClick}>React Playground</h1>
-        </Link>
+            <Link to="/" style={headerItem} onClick={props.onHeadTextClick}>
+                React Playground
+            </Link>
         </div>
     );
 }
@@ -32,5 +32,6 @@ const headerItem: CSSProperties = {
     padding: 0,
     display: 'flex',
     alignItems: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    textDecoration: "none"
 };
