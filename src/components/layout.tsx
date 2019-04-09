@@ -6,35 +6,16 @@ import { fullScreen } from '../css';
 export type View =  "main" | "forest" | "desert" | "sky"
 
 
-interface State {
-    view: View
-}
-
 /** React function component */
-export default class Layout extends React.Component<{}, State> {
+export default function Layout() {
 
-    state: State = {
-        view: "main"
-    }
+    return (
+        <div style={{ ...columnFlex, ...fullScreen, ...background }}>
+            <Navbar/>
+            <ViewContainer />
+        </div>
+    );
 
-    handleOnHeaderTextClick = () => {
-        this.setState({ view: "main" })
-    }
-
-    handleOnSectionItemOnclick = (view: View) => {
-        this.setState({ view });
-    }
-    
-    render(){
-        //console.log(this.state.view)
-        return (
-            <div style={{ ...columnFlex, ...fullScreen, ...background }}>
-                <Navbar onHeadTextClick={this.handleOnHeaderTextClick}/>
-                <ViewContainer view={this.state.view} onSectionItemClick={this.handleOnSectionItemOnclick} />
-            </div>
-        );
-
-    }
 }
 
 const columnFlex: CSSProperties = {

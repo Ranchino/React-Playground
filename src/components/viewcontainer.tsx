@@ -2,25 +2,22 @@ import React, { CSSProperties } from 'react';
 import DetailView from './detailview';
 import MainView from './mainview';
 import { View } from './layout';
+import { Route, Router } from 'react-router';
 
-interface Props {
-    onSectionItemClick: (view: View) => void
-    view: View
-}
 
-export default function ViewContainer(props: Props){
-    if(props.view==="main") {
-        return (
-            <div style={container}>
-                <MainView onSectionItemClick={props.onSectionItemClick}/>
-            </div>
-        )
-    }
+
+export default function ViewContainer(){
+
     return (
-        <div>
-            <DetailView view={props.view}/>
+        <div style={container}>
+            <Route exact path="/" component={MainView} />
+            <Route path="/forest" render={() => <DetailView view="forest"/>} />
+            <Route path="/desert" render={() => <DetailView view="desert"/>} />
+            <Route path="/sky" render={() => <DetailView view="sky"/>} />
+
         </div>
     )
+
 }
 
 const container: CSSProperties = {

@@ -2,9 +2,7 @@ import React, { CSSProperties } from 'react';
 import SectionItem from './sectionItem';
 import { View } from './layout';
 
-interface Props {
-    onSectionItemClick: (view: View) => void
-}
+interface Props {}
 
 /** React function component */
 export default function MainView(props: Props) {
@@ -14,7 +12,7 @@ export default function MainView(props: Props) {
     return (
         <div style={container}>
             {sectionIds.map((value) => 
-                <SectionItem key={value} view={value} onClick={props.onSectionItemClick} />
+                <SectionItem key={value} view={value} />
             )}
         </div>
     );
