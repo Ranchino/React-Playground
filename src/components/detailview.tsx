@@ -9,8 +9,8 @@ interface Props {
 
 /** React function component */
 export default function DetailView(props:Props) {
-
     const imageSrc = `../assets/${props.view}.jpg`
+    //om man vill testa error-Boundary så släng in throw "hej"
 
     return (
         <Suspense fallback={<Spinner/>}>
