@@ -1,12 +1,12 @@
 import React, { CSSProperties } from 'react';
-import { PacmanLoader } from 'react-spinners';
+import { CircleLoader } from 'react-spinners';
 import { centeredContent, fullScreen } from '../css';
 
 
 export default function() {
     return (
         <div style={{...centeredContent,...fullScreen}}>
-            <PacmanLoader color="white" size={25} sizeUnit={"px"}/>
+            <CircleLoader color="white" size={10} sizeUnit={"em"}/>
             <h2 style={appearance}>Loading...</h2>
         </div>
     )

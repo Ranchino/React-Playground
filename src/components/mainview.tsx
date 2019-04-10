@@ -7,7 +7,7 @@ interface Props {}
 /** React function component */
 export default function MainView(props: Props) {
 
-    const sectionIds: View[] = ['forest', 'sky', 'desert'];
+    const sectionIds: View[] = ['sky', 'forest', 'desert'];
 
     return (
         <div style={container}>

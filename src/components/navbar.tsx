@@ -29,5 +29,6 @@ const headerItem: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
-    textDecoration: "none"
+    textDecoration: "none",
+    color: "white"
 };
