@@ -1,5 +1,7 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, Suspense } from 'react';
 import { View } from './layout';
+import Spinner from './spinner';
+
 
 interface Props {
     view: View
@@ -11,10 +13,12 @@ export default function DetailView(props:Props) {
     const imageSrc = `../assets/${props.view}.jpg`
 
     return (
-        <div style={container}>
-            <img src={imageSrc} style={fullscreen}/>
-            <h1 style={{ ...centeredAbsolute, ...appearance}}>{props.view}</h1>
-        </div>
+        <Suspense fallback={<Spinner/>}>
+            <div style={container}>
+                <img src={imageSrc} style={fullscreen}/>
+                <h1 style={{ ...centeredAbsolute, ...appearance}}>{props.view}</h1>
+            </div>
+        </Suspense>
     );
 }
 

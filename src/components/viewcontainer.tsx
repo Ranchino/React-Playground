@@ -1,21 +1,22 @@
-import React, { CSSProperties } from 'react';
-import DetailView from './detailview';
-import MainView from './mainview';
-import { View } from './layout';
-import { Route, Router } from 'react-router';
+import React, { CSSProperties, Suspense, lazy } from 'react';
+import { Route } from 'react-router';
+import Spinner from './spinner';
 
+const DetailView = React.lazy(() => import('./detailview'));
+const MainView = React.lazy(() => import('./mainview'));
 
 
 export default function ViewContainer(){
 
     return (
-        <div style={container}>
-            <Route exact path="/" component={MainView} />
-            <Route path="/forest" render={() => <DetailView view="forest"/>} />
-            <Route path="/desert" render={() => <DetailView view="desert"/>} />
-            <Route path="/sky" render={() => <DetailView view="sky"/>} />
-
-        </div>
+        <Suspense fallback={<Spinner/>}>
+            <div style={container}>
+                <Route exact path="/" component={MainView} />
+                <Route path="/forest" render={() => <DetailView view="forest"/>} />
+                <Route path="/desert" render={() => <DetailView view="desert"/>} />
+                <Route path="/sky" render={() => <DetailView view="sky"/>} />
+            </div>
+        </Suspense>
     )
 
 }
