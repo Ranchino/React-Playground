@@ -3,85 +3,68 @@ import { fullscreenAbsolute, fullScreen, centeredContent } from '../css';
 import { View } from './layout';
 import Spinner from './spinner';
 import Modal from './modal';
+import { RouteComponentProps } from 'react-router-dom';
 
 
-interface Props {
-    view: View
+interface Props extends RouteComponentProps {
+    id: string
 }
 
-/** React function component */
-export default class DetailView extends React.Component<Props, {}> {
-    state = {show: false}
+interface State {
+    isModalOpen: boolean
+}
 
-    toggleModal = () => {
-        this.setState({ show: !this.state.show})
-    }
-    private imageSrc = `../assets/${this.props.view}.jpg`
-    //om man vill testa error-Boundary så släng in throw "hej"
+export default class DetailView extends Component<Props, State> {
 
-    private get renderModal (){
-        if (this.state.show){
-            return (
-                <Modal>
-                    <h1 style={modulText}>Modal</h1>
-                </Modal>
-            )
-        }
+    state: State = {
+        isModalOpen: false
     }
 
-    render () {
+    private get view() {
+        return this.props.match.url.substr(1);
+    }
+
+    private get imageSrc() {
+        return `../assets/${this.view}.jpg`;
+    }
+
+    private openModal = () => this.setState({ isModalOpen: true });
+    private closeModal = () => this.setState({ isModalOpen: false });
+
+    render() {
         return (
-            <Suspense fallback={<Spinner/>}>
-                <div style={container}>
-                    {/* <button onClick={this.toggleModal} style={{...buttonStyle,...centeredAbsolute}}>Open Modal</button> */}
-                    <img src={this.imageSrc} style={fullscreen}/>
-                    <h1 onClick={this.toggleModal} style={{ ...centeredAbsolute, ...appearance}}>{this.props.view}</h1>
-                    {this.renderModal}
+            <div style={container}>
+                <img src={this.imageSrc} style={{ ...fullscreenAbsolute }}/>
+                <div style={{ ...content, ...fullscreenAbsolute }}>
+                    
+                    <div style={{ ...fullScreen, ...centeredContent }}>
+                        <button onClick={this.openModal}>Open Modal</button>
+                    </div>
+
                 </div>
-            </Suspense>
-
-        )
+                {
+                    this.state.isModalOpen ? (
+                        <Modal persistent shouldClose={this.closeModal}>
+                            <h3>Modal opened from <span style={highlighted}>{this.view}</span> view</h3>
+                            <button onClick={this.closeModal}>Close modal</button>
+                        </Modal>
+                    ) : null
+                }
+            </div>
+        );
     }
-   
-
 }
 
-const modulText: CSSProperties = {
-    color: "red"
+const highlighted: CSSProperties = {
+    color: 'orange'
 }
-//Ändra till rätt storlek på bilderna i mobilläge
+
+const content: CSSProperties = {
+    zIndex: 10
+}
+    
 const container: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    margin: '0.5em',
-    justifyContent: 'stretch',
-    alignItems: 'stretch',
-    gridTemplateColumns: '50% 50%'
-}
-
-const fullscreen: CSSProperties = {
+    position: 'relative',
     width: '100%',
-    height: '100%',
-    objectFit: 'cover'
-}
-
-const centeredAbsolute: CSSProperties = {
-    position: 'absolute',
-    margin: 0,
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)'
-}
-
-const appearance: CSSProperties = {
-    color: '#1E1E1E',
-    textShadow: '0 0 3px white'
-}
-
-const buttonStyle: CSSProperties = {
-    fontSize: '1.5em',
-    padding: '0.5em',
-    backgroundColor: 'white',
-    border: 'none'
+    height: '100%'
 }

@@ -1,26 +1,43 @@
-import React, { CSSProperties } from 'react';
-import SectionItem from './sectionItem';
-import DetailView from './detailview';
-import ReactDOM, { createPortal} from 'react-dom';
-import { element } from 'prop-types';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { fullScreen, centeredContent } from '../css';
 
+interface Props {
+    /** Using a persistent modal may cause it to never close if not handled manually */
+    persistent?: boolean;
+    shouldClose: () => void;
+}
 
-const appRoot = document.getElementById('root');
-const modalRoot = document.getElementById('modal-container');
+export default class Modal extends Component<Props> {
+    
+    element: HTMLDivElement 
 
-interface Props {}
+    constructor(props: Props) {
+        super(props);
+        this.element = document.createElement('div');
+        this.element.id = 'modal-root';
+    }
 
+    onclick = () => {
+        if (!this.props.persistent) {
+            this.props.shouldClose();
+        }
+    }
 
+    componentDidMount() {
+        document.body.appendChild(this.element);
+    }
 
-export default class Modal extends React.Component<Props, {}> {
-  
-  render() {
-    return createPortal(
-      this.props.children,
-      modalRoot!
-    );
-  }
+    componentWillUnmount() {
+        document.body.removeChild(this.element);
+    }
 
-
+    render() {
+        return ReactDOM.createPortal(
+            <div style={{ ...fullScreen, ...centeredContent }} onClick={this.onclick}>
+                {this.props.children}
+            </div>,
+            this.element,
+        );
+    }
 }

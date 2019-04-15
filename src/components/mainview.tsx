@@ -1,19 +1,23 @@
 import React, { CSSProperties } from 'react';
 import SectionItem from './sectionItem';
 import { View } from './layout';
+import ViewSection from './viewSection';
 
-interface Props {}
+interface Props {
+    detailViews: string[]
+}
 
 /** React function component */
 export default function MainView(props: Props) {
 
-    const sectionIds: View[] = ['sky', 'forest', 'desert'];
 
     return (
         <div style={container}>
-            {sectionIds.map((value) => 
-                <SectionItem key={value} view={value} />
-            )}
+            {props.detailViews.map((value) => (
+                <ViewSection key={value}>
+                    <SectionItem view={value} />
+                </ViewSection>
+            ))}
         </div>
     );
 }

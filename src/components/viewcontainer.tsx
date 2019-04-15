@@ -1,25 +1,30 @@
 import React, { CSSProperties, Suspense, lazy } from 'react';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import Spinner from './spinner';
-import Errorboundary from './errorBoundary';
 
-const DetailView = React.lazy(() => import('./detailview'));
-const MainView = React.lazy(() => import('./mainview'));
+const DetailView = lazy(() => import('./detailview'));
+const MainView = lazy(() => import('./mainview'));
 
 
 export default function ViewContainer(){
+    const detailViews = ['forest', 'sky', 'desert'];
+
 
     return (
-        <Errorboundary fallbackUI={<Spinner/>}>
             <Suspense fallback={<Spinner/>}>
-                <div style={container}>
-                    <Route exact path="/" component={MainView} />
-                    <Route path="/forest" render={() => <DetailView view="forest"/>} />
-                    <Route path="/desert" render={() => <DetailView view="desert"/>} />
-                    <Route path="/sky" render={() => <DetailView view="sky"/>} />
-                </div>
+                <Switch>
+                    <div style={container}>
+                        <Route exact path="/" render={() =>
+                            <MainView detailViews={detailViews}/>
+
+                        }/>
+
+                        <Route path="/forest" component={DetailView} />
+                        <Route path="/desert" component={DetailView} />
+                        <Route path="/sky" component={DetailView} />
+                    </div>
+                </Switch>
             </Suspense>
-        </Errorboundary>
     )
 
 }

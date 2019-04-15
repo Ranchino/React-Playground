@@ -10,7 +10,7 @@
                 margin: 0;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
             }
-            #modal-container {
+            #modal-root {
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -26,7 +26,9 @@
     </head>
     <body>
         <div id="root"></div>
-        <div id="modal-container"></div>
+
+        <!-- Will be inserted via React Portal when Modal component is mounted -->
+        <!-- <div id="modal-root"></div> -->
 
         <!-- Dependencies -->
         <script src="./node_modules/react/umd/react.development.js"></script>

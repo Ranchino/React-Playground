@@ -1,25 +1,29 @@
 import React, { CSSProperties } from 'react';
-import { centeredContent } from '../css';
+import { centeredContent, fullscreenAbsolute } from '../css';
 import { View } from './layout';
 import { Link } from 'react-router-dom';
 
 interface Props {
-    view: View
+    view: String
 }
 /** React function component */
 export default function SectionItem(props: Props) {
+
+    const url = `${props.view}`;
     const imageSrc = `../assets/${props.view}.jpg`;
 
-    
-
     return (
-        <Link to={"/"+props.view} style={{ ...gridItem, ...centeredContent }} >
-            <img src={imageSrc} style={fullscreen} />
+        <Link to={url} style={{ ...linkAppearance, ...centeredContent }}>
+            <img src={imageSrc} style={fullscreenAbsolute} />
             <h1 style={{ ...centeredAbsolute, ...appearance}}>{props.view}</h1>
         </Link>
     );
 }
 
+const linkAppearance: CSSProperties = {
+    height: '100%',
+    cursor: 'pointer'
+}
 
 const gridItem: CSSProperties = {
     position: 'relative',
