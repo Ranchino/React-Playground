@@ -1,6 +1,8 @@
-import React, { CSSProperties, Suspense } from 'react';
+import React, { CSSProperties, Suspense, Component } from 'react';
+import { fullscreenAbsolute, fullScreen, centeredContent } from '../css';
 import { View } from './layout';
 import Spinner from './spinner';
+import Modal from './modal';
 
 
 interface Props {
@@ -8,20 +10,45 @@ interface Props {
 }
 
 /** React function component */
-export default function DetailView(props:Props) {
-    const imageSrc = `../assets/${props.view}.jpg`
+export default class DetailView extends React.Component<Props, {}> {
+    state = {show: false}
+
+    toggleModal = () => {
+        this.setState({ show: !this.state.show})
+    }
+    private imageSrc = `../assets/${this.props.view}.jpg`
     //om man vill testa error-Boundary så släng in throw "hej"
 
-    return (
-        <Suspense fallback={<Spinner/>}>
-            <div style={container}>
-                <img src={imageSrc} style={fullscreen}/>
-                <h1 style={{ ...centeredAbsolute, ...appearance}}>{props.view}</h1>
-            </div>
-        </Suspense>
-    );
+    private get renderModal (){
+        if (this.state.show){
+            return (
+                <Modal>
+                    <h1 style={modulText}>Modal</h1>
+                </Modal>
+            )
+        }
+    }
+
+    render () {
+        return (
+            <Suspense fallback={<Spinner/>}>
+                <div style={container}>
+                    {/* <button onClick={this.toggleModal} style={{...buttonStyle,...centeredAbsolute}}>Open Modal</button> */}
+                    <img src={this.imageSrc} style={fullscreen}/>
+                    <h1 onClick={this.toggleModal} style={{ ...centeredAbsolute, ...appearance}}>{this.props.view}</h1>
+                    {this.renderModal}
+                </div>
+            </Suspense>
+
+        )
+    }
+   
+
 }
 
+const modulText: CSSProperties = {
+    color: "red"
+}
 //Ändra till rätt storlek på bilderna i mobilläge
 const container: CSSProperties = {
     display: 'flex',
@@ -50,4 +77,11 @@ const centeredAbsolute: CSSProperties = {
 const appearance: CSSProperties = {
     color: '#1E1E1E',
     textShadow: '0 0 3px white'
+}
+
+const buttonStyle: CSSProperties = {
+    fontSize: '1.5em',
+    padding: '0.5em',
+    backgroundColor: 'white',
+    border: 'none'
 }
