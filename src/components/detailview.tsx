@@ -38,7 +38,7 @@ export default class DetailView extends Component<Props, State> {
                 <div style={{ ...content, ...fullscreenAbsolute }}>
                     
                     <div style={{ ...fullScreen, ...centeredContent }}>
-                        <button onClick={this.openModal}>Open Modal</button>
+                        <button onClick={this.openModal}>{this.view}</button>
                     </div>
 
                 </div>

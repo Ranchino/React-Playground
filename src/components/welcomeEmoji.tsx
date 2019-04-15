@@ -8,7 +8,7 @@ interface Props {
 
 /* const appRoot = document.getElementById('app-container');
  */
-export default class WelcomeScreen extends React.Component<Props, {}>{
+export default class WelcomeEmoji extends React.Component<Props, {}>{
     render (){
         return (
             <div style={{ ...backgroundDimmed,...centeredContent}}>
