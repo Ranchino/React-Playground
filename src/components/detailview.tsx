@@ -1,13 +1,14 @@
-import React, { CSSProperties, Suspense, Component } from 'react';
-import { fullscreenAbsolute, fullScreen, centeredContent } from '../css';
-import { View } from './layout';
-import Spinner from './spinner';
-import Modal from './modal';
+import React, { CSSProperties, Component } from 'react';
+import { fullscreenAbsolute } from '../css';
 import { RouteComponentProps } from 'react-router-dom';
+import HeaderSection from './headerSection';
+import TextSection from './textSection';
+import { View } from './layout';
+import ImageSection from './imageSection';
 
 
 interface Props extends RouteComponentProps {
-    id: string
+    view: View
 }
 
 interface State {
@@ -16,9 +17,6 @@ interface State {
 
 export default class DetailView extends Component<Props, State> {
 
-    state: State = {
-        isModalOpen: false
-    }
 
     private get view() {
         return this.props.match.url.substr(1);
@@ -28,43 +26,45 @@ export default class DetailView extends Component<Props, State> {
         return `../assets/${this.view}.jpg`;
     }
 
-    private openModal = () => this.setState({ isModalOpen: true });
-    private closeModal = () => this.setState({ isModalOpen: false });
 
     render() {
         return (
             <div style={container}>
-                <img src={this.imageSrc} style={{ ...fullscreenAbsolute }}/>
-                <div style={{ ...content, ...fullscreenAbsolute }}>
-                    
-                    <div style={{ ...fullScreen, ...centeredContent }}>
-                        <h1 onClick={this.openModal}>{this.view}</h1>
+                <img src={this.imageSrc} style={{ ...fullscreenAbsolute, ...trans }}/>
+                <div style={stylingContent}>
+                    <div style={margin}>
+                        <HeaderSection view={this.view}/>
+                        <TextSection view={this.props.view}/>
+                        <ImageSection view={this.view}/>
                     </div>
-
                 </div>
-                {
-                    this.state.isModalOpen ? (
-                        <Modal persistent shouldClose={this.closeModal}>
-                            <h3>Modal opened from <span style={highlighted}>{this.view}</span> view</h3>
-                            <button onClick={this.closeModal}>Close modal</button>
-                        </Modal>
-                    ) : null
-                }
             </div>
         );
     }
 }
 
-const highlighted: CSSProperties = {
-    color: 'orange'
-}
 
-const content: CSSProperties = {
-    zIndex: 10
+const margin: CSSProperties = {
+    margin: '10px',
+    flexGrow: 1
 }
     
 const container: CSSProperties = {
     position: 'relative',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    display: 'flex',
+}
+
+const stylingContent: CSSProperties = {
+    position: 'absolute',
+    display: 'flex',
+    width: '100%', 
+    height: '100%',
+    overflowY: 'auto'
+
+}
+
+const trans: CSSProperties = {
+    opacity: 0.4
 }
