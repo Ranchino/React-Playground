@@ -21,7 +21,7 @@ interface State {
 export default class App extends React.Component<{}, State> {
 
     state: State = {
-        isModalOpen: true
+        isModalOpen: false
     }
 
     private openModal = () => this.setState({ isModalOpen: true });
